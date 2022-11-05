@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,7 +10,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 interface Column {
-  id: 'name' | 'code' | 'population' | 'size' | 'density';
+  id: 'name' | 'cur_price' | 'apr';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -18,64 +19,45 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'Current Price', minWidth: 100 },
-  {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
-    align: 'right',
-    format: (value: number) => value.toLocaleString('en-US'),
+  { 
+    id: 'cur_price', 
+    label: 'Current Price', minWidth: 100,
+    format: (value: number) => value.toLocaleString('en-US'), 
   },
   {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
+    id: 'apr',
+    label: 'APR',
     minWidth: 170,
-    align: 'right',
     format: (value: number) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'density',
-    label: 'Density',
-    minWidth: 170,
-    align: 'right',
-    format: (value: number) => value.toFixed(2),
   },
 ];
 
 interface Data {
   name: string;
-  code: string;
-  population: number;
-  size: number;
-  density: number;
+  cur_price: number;
+  apr: number;
 }
 
 function createData(
   name: string,
-  code: string,
-  population: number,
-  size: number,
+  cur_price: number,
+  apr: number,
 ): Data {
-  const density = population / size;
-  return { name, code, population, size, density };
+  return { name, cur_price, apr };
 }
 
 const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767),
+  createData('Currency 1', 1324171354, 3287263),
+  createData('Currency 2', 1403500365, 9596961),
+  createData('Currency 3', 60483973, 301340),
+  createData('Currency 4', 327167434, 9833520),
+  createData('Currency 5', 37602103, 9984670),
+  createData('Currency 6', 25475400, 7692024),
+  createData('Currency 7', 83019200, 357578),
+  createData('Currency 8', 4857000, 70273),
+  createData('Currency 9', 126577691, 1972550),
+  createData('Currency 10', 126317000, 377973),
+  createData('Currency 11', 67022000, 640679),
 ];
 
 const StickyHeadTable = () => {
@@ -100,12 +82,13 @@ const StickyHeadTable = () => {
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
-                  align={column.align}
+                  align={'center'}
                   style={{ minWidth: column.minWidth }}
                 >
                   {column.label}
                 </TableCell>
               ))}
+              <TableCell align={'center'}>Button</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -113,17 +96,20 @@ const StickyHeadTable = () => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
+                        <TableCell key={column.id} align={'center'}>
                           {column.format && typeof value === 'number'
                             ? column.format(value)
                             : value}
                         </TableCell>
                       );
                     })}
+                    <TableCell>
+                      <Button>Borrow</Button>
+                    </TableCell>
                   </TableRow>
                 );
               })}
