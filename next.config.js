@@ -1,7 +1,9 @@
 const withImages = require('next-images')
 
-module.exports = withImages({
-  images: {
-    domains: [process.env.NEXT_PUBLIC_TOKEN_IMAGES],
-  },
-})
+module.exports = withImages()
+
+// module.exports = withImages({
+//   images: {
+//     domains: [process.env.NEXT_PUBLIC_TOKEN_IMAGES],
+//   },
+// })
