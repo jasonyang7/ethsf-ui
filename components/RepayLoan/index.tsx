@@ -41,11 +41,12 @@ const team = [
   },
 ]
 
-export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
+export default function RepayLoan() {
+  const [open, setOpen] = useState(true)
 
   return (
-    <Transition.Root show={true} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
+    <Transition.Root show={open} as={Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={setOpen}>
         <div className="fixed inset-0" />
 
         <div className="fixed inset-0 overflow-hidden">
@@ -70,7 +71,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                             <button
                               type="button"
                               className="rounded-md bg-indigo-700 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                              onClick={() => setIsOpen(false)}
+                              onClick={() => setOpen(false)}
                             >
                               <span className="sr-only">Close panel</span>
                               <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -79,7 +80,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                         </div>
                         <div className="mt-1">
                           <p className="text-sm text-indigo-300">
-                            Create your loan here.
+                            Repay your loan here.
                           </p>
                         </div>
                       </div>
@@ -263,7 +264,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                       <button
                         type="button"
                         className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => setOpen(false)}
                       >
                         Cancel
                       </button>

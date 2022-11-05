@@ -5,11 +5,8 @@ import Wrapper from 'components/Wrapper'
 import Title from 'components/Title'
 import SubTitle from 'components/SubTitle'
 import Tabs from 'components/Tabs'
-import Purchase from 'components/Purchase/Purchase'
-import AllLoans from 'components/AllLoans'
-import MyLoans from 'components/MyLoans'
-import Overview from 'components/Overview'
 import { useTokenDataStore } from 'store/tokendata'
+import LendingPage from 'components/Lending'
 
 const TabWrapper = styled(Tabs)`
   display: flex;
@@ -36,7 +33,7 @@ const index = () => {
     <>
       <Section height="7" background="white">
         <HeroWrapper>
-          <Title>Sheliak</Title>
+          <Title>BORROW</Title>
           <SubTitle>
             A simple and decentralized way to borrow and lend different tokens.
           </SubTitle>
@@ -44,23 +41,8 @@ const index = () => {
       </Section>
       <Section height="10" background="white">
         <HeroWrapper>
-          <Overview></Overview>
+          <LendingPage></LendingPage>
         </HeroWrapper>
-      </Section>
-      <Section height="40" background="white">
-        <StickyHeadTableWrapper>
-          <AllLoans></AllLoans>
-        </StickyHeadTableWrapper>
-      </Section>
-      {/* <Section height="40" background="white">
-        <StickyHeadTableWrapper>
-          <MyLoans></MyLoans>
-        </StickyHeadTableWrapper>
-      </Section> */}
-      <Section height="40" background="white">
-        <StickyHeadTableWrapper>
-          <Overview></Overview>
-        </StickyHeadTableWrapper>
       </Section>
 
     </>

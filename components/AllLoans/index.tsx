@@ -65,7 +65,7 @@ export default function AllLoans() {
         >
           Add Loan
         </button>
-        {isCreatingLoan && <NewLoan />}
+        {isCreatingLoan && <NewLoan setIsOpen={setIsCreatingLoan}/>}
       </div>
       <div className="mt-8 flex flex-col">
         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">

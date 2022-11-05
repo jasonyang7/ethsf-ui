@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import { NextRouter } from 'next/router'
 
 import Web3Provider from 'components/web3/Provider'
 
