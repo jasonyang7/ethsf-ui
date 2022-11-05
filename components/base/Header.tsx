@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Wrapper from 'components/Wrapper/index'
+import Navigation from 'components/Navigation'
 import Settings from './Settings'
 
 const Row = styled.header`
@@ -25,8 +26,8 @@ export const Header = () => {
   return (
     <Wrapper>
       <Row>
-        <Title>Title</Title>
-        <Menu>Menu</Menu>
+        <Title>Sheliak</Title>
+        <Navigation></Navigation>
         <Settings />
       </Row>
     </Wrapper>

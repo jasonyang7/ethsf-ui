@@ -57,7 +57,6 @@ const index = () => {
           <MyLoans></MyLoans>
         </StickyHeadTableWrapper>
       </Section>
-      <Purchase></Purchase>
 
     </>
   )
