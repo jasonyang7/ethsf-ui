@@ -1,6 +1,9 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -9,57 +12,40 @@ export default function PaymentForm() {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Payment method
+        Select Amount
       </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <TextField
+      <List disablePadding>
+        <ListItem key="token name" sx={{ py: 1, px: 0 }}>
+            <ListItemText primary="token name" secondary="token description" />
+            <TextField
             required
-            id="cardName"
-            label="Name on card"
-            fullWidth
-            autoComplete="cc-name"
+            id="numTokens"
+            name="tokens"
+            label="Number of Tokens"
             variant="standard"
           />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
+        </ListItem>
+        <ListItem key="token name" sx={{ py: 1, px: 0 }}>
+            <ListItemText primary="token name" secondary="token description" />
+            <TextField
             required
-            id="cardNumber"
-            label="Card number"
-            fullWidth
-            autoComplete="cc-number"
+            id="numTokens"
+            name="tokens"
+            label="Number of Tokens"
             variant="standard"
           />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
+        </ListItem>
+        <ListItem key="token name" sx={{ py: 1, px: 0 }}>
+            <ListItemText primary="token name" secondary="token description" />
+            <TextField
             required
-            id="expDate"
-            label="Expiry date"
-            fullWidth
-            autoComplete="cc-exp"
+            id="numTokens"
+            name="tokens"
+            label="Number of Tokens"
             variant="standard"
           />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cvv"
-            label="CVV"
-            helperText="Last three digits on signature strip"
-            fullWidth
-            autoComplete="cc-csc"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-            label="Remember credit card details for next time"
-          />
-        </Grid>
-      </Grid>
+        </ListItem>
+      </List>
     </React.Fragment>
   );
 }

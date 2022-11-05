@@ -29,15 +29,13 @@ function Copyright() {
   );
 }
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Select Options', 'Review'];
 
 function getStepContent(step: number) {
   switch (step) {
     case 0:
-      return <AddressForm />;
-    case 1:
       return <PaymentForm />;
-    case 2:
+    case 1:
       return <Review />;
     default:
       throw new Error('Unknown step');
@@ -46,7 +44,7 @@ function getStepContent(step: number) {
 
 const theme = createTheme();
 
-export default function Purchase() {
+const Purchase = () => {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -108,7 +106,6 @@ export default function Purchase() {
                   </Button>
                 )}
                 <Button
-                  variant="contained"
                   onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
                 >
@@ -123,3 +120,5 @@ export default function Purchase() {
     </ThemeProvider>
   );
 }
+
+export default Purchase;

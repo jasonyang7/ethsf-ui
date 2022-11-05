@@ -43,6 +43,7 @@ export default function MyApp(props: any) {
         <meta name="language" content="English" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </Head>
       <ThemeProvider theme={theme}>
         <Web3Provider>
