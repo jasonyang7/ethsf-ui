@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import NewLoan from 'components/NewLoan'
 import LendModal, { Loan } from 'components/LendModal';
 
 

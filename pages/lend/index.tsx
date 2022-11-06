@@ -4,24 +4,11 @@ import Section from 'components/Section'
 import Wrapper from 'components/Wrapper'
 import Title from 'components/Title'
 import SubTitle from 'components/SubTitle'
-import Tabs from 'components/Tabs'
 import { useTokenDataStore } from 'store/tokendata'
 import MyLending from 'components/MyLending'
-import LendModal from 'components/LendModal'
-
-const TabWrapper = styled(Tabs)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
 
 const HeroWrapper = styled(Wrapper)`
   padding-top: 1rem;
-  text-align: center
-`
-
-const StickyHeadTableWrapper = styled(Wrapper)`
-  padding-top: 3rem;
   text-align: center
 `
 
