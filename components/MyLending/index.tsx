@@ -28,7 +28,7 @@ const loans:Loan[] = [
     collateralAmount: 2.25,
     amtUSDCToBorrow: 345,
     loanDuration: "16 Weeks",
-    status: "Pending",
+    status: "Complete",
   },
 ]
 

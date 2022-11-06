@@ -71,13 +71,13 @@ export default function LendModal({ loan, open, setIsOpen }: { loan: Loan, open:
               </div>
             </div>
             <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-              <button
+              {loan.status == "Complete" && <button
                 type="button"
                 className="inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                 onClick={lendTokens}
               >
-                Lend
-              </button>
+                Claim
+              </button>}
               <button
                 type="button"
                 className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-500 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm bg-gray-100 hover:bg-gray-200 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm"
