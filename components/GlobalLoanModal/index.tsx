@@ -1,54 +1,116 @@
 import { Dialog } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { CONTRACTS } from 'constants/contracts'
+import { POOL_ABI } from 'constants/abis/poolAbi'
+import { GENERICERC20_ABI } from 'constants/abis/genericerc20abi'
+import { ethers } from 'ethers'
 
 export interface Loan {
-  borrowerAddress: string, // not shown here
-  collateralTokenAddress: string, // not shown here
-  collateralToken: string,
-  collateralAmount: number,
-  amtUSDCToBorrow: number,
-  loanDuration: string,
-  status: string,
+  borrowerAddress: string // not shown here
+  collateralTokenAddress: string // not shown here
+  collateralToken: string
+  collateralAmount: number
+  amtUSDCToBorrow: number
+  loanDuration: string
+  status: string
 }
 
-export default function GlobalLoanModal({ loan, open, setIsOpen }: { loan: Loan, open: boolean, setIsOpen: Function }) {
+export default function GlobalLoanModal({
+  loan,
+  open,
+  setIsOpen,
+}: {
+  loan: Loan
+  open: boolean
+  setIsOpen: Function
+}) {
+  const lendTokens = async (event: any) => {
+    event.preventDefault()
+    const { ethereum } = window
+    if (ethereum) {
+      const ethereum = (window as any).ethereum
+      const accounts = await ethereum.request({
+        method: 'eth_requestAccounts',
+      })
+      const provider = new ethers.providers.Web3Provider(ethereum)
+      const walletAddress = accounts[0] // first account in MetaMask
+      const { chainId } = await provider.getNetwork()
+      const POOL_CONTRACT_ADDR = CONTRACTS.pool[chainId]
+      const poolContract = new ethers.Contract(
+        POOL_CONTRACT_ADDR,
+        POOL_ABI,
+        provider,
+      )
 
-  const lendTokens = () => {
+      const COLLATERAL_ADDR = CONTRACTS[loan.collateralToken][chainId]
+      const COLLATERAL_AMOUNT = Math.round(loan.collateralAmount)
+      const BORROW_AMOUNT = Math.round(loan.amtUSDCToBorrow)
+      const EXPIRY_TIME = Math.round(
+        Date.now() / 1000 + Number(loan.loanDuration),
+      )
+
+      const borrowTokenContract = new ethers.Contract(
+        CONTRACTS.borrow_token[chainId],
+        GENERICERC20_ABI,
+        provider,
+      )
+
+
+      const position = await poolContract.positions(
+        await poolContract.getPositionKey(
+          walletAddress,
+          COLLATERAL_ADDR,
+          borrowTokenContract.address,
+        ),
+      )
+      const signer = provider.getSigner(walletAddress)
+      await borrowTokenContract.connect(signer).approve(
+        POOL_CONTRACT_ADDR,
+        position.borrowAmount, //collateralAmount
+      )
+
+      await poolContract.connect(signer).fill(
+        position.borrower, //collateralToken Address
+        position.collateral, //collateralAmount
+      )
+
+      
+    }
     setIsOpen(false) // don't delete this
-    console.log(loan.collateralToken);
-    console.log(loan.collateralAmount);
-    console.log(loan.amtUSDCToBorrow);
-    console.log(loan.loanDuration);
-    console.log(loan.status);
   }
 
   return (
-    <Dialog open={open} className="relative z-10" onClose={() => setIsOpen(false)}>
+    <Dialog
+      open={open}
+      className="relative z-10"
+      onClose={() => setIsOpen(false)}
+    >
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 z-10 overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-
           <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
             <div className="sm:flex sm:items-start">
               <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                <ExclamationTriangleIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
+                <ExclamationTriangleIcon
+                  className="h-6 w-6 text-red-600"
+                  aria-hidden="true"
+                />
               </div>
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
+                <Dialog.Title
+                  as="h3"
+                  className="text-lg font-medium leading-6 text-gray-900"
+                >
                   Lend Tokens
                 </Dialog.Title>
                 <div className="mt-2">
-                  <p className="text-md text-gray-900">
-                    Token
-                  </p>
+                  <p className="text-md text-gray-900">Token</p>
                   <p className="text-sm text-gray-500">
                     {loan.collateralToken}
                   </p>
                 </div>
                 <div className="mt-2">
-                  <p className="text-md text-gray-900">
-                    Collateral Amount
-                  </p>
+                  <p className="text-md text-gray-900">Collateral Amount</p>
                   <p className="text-sm text-gray-500">
                     {loan.collateralAmount}
                   </p>
@@ -62,12 +124,8 @@ export default function GlobalLoanModal({ loan, open, setIsOpen }: { loan: Loan,
                   </p>
                 </div>
                 <div className="mt-2">
-                  <p className="text-md text-gray-900">
-                    Loan Duration
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {loan.loanDuration}
-                  </p>
+                  <p className="text-md text-gray-900">Loan Duration</p>
+                  <p className="text-sm text-gray-500">{loan.loanDuration}</p>
                 </div>
               </div>
             </div>
