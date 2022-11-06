@@ -1,4 +1,4 @@
-export const POOL_ABI = [
+export const GENERICERC20_ABI = [
   {
     inputs: [
       {

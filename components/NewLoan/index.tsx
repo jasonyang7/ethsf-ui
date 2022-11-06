@@ -1,22 +1,67 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import { CONTRACTS } from 'constants/contracts'
+import { POOL_ABI } from 'constants/abis/poolAbi'
+import { GENERICERC20_ABI } from 'constants/abis/genericerc20abi'
+import { ethers } from 'ethers'
 
-export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
-
+export default function NewLoan({ setIsOpen }: { setIsOpen: Function }) {
   const handleSubmit = async (event: any) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    console.log(event.target.usdcLoanAmt.value);
-    console.log(event.target.token.value);
-    console.log(event.target.amtCollateral.value);
-    console.log(event.target.duration.value);
+    const { ethereum } = window
+    if (ethereum) {
+      const ethereum = (window as any).ethereum
+      const accounts = await ethereum.request({
+        method: 'eth_requestAccounts',
+      })
+      const provider = new ethers.providers.Web3Provider(ethereum)
+      const walletAddress = accounts[0] // first account in MetaMask
+      const { chainId } = await provider.getNetwork()
+      const POOL_CONTRACT_ADDR = CONTRACTS.pool[chainId]
+      const poolContract = new ethers.Contract(
+        POOL_CONTRACT_ADDR,
+        POOL_ABI,
+        provider,
+      )
+
+      const COLLATERAL_ADDR = CONTRACTS[event.target.token.value][chainId]
+      const COLLATERAL_AMOUNT = Math.round(event.target.amtCollateral.value)
+      const BORROW_AMOUNT = Math.round(event.target.usdcLoanAmt.value)
+      const EXPIRY_TIME = Math.round(
+        Date.now() / 1000 + event.target.duration.value,
+      )
+
+      const collateralTokenContract = new ethers.Contract(
+        COLLATERAL_ADDR,
+        GENERICERC20_ABI,
+        provider,
+      )
+
+      const signer = provider.getSigner(walletAddress)
+      await collateralTokenContract.connect(signer).approve(
+        POOL_CONTRACT_ADDR,
+        COLLATERAL_AMOUNT, //collateralAmount
+      )
+
+      await poolContract.connect(signer).create(
+        COLLATERAL_ADDR, //collateralToken Address
+        COLLATERAL_AMOUNT, //collateralAmount
+        BORROW_AMOUNT, //borrowAmount
+        EXPIRY_TIME, //expiryTime
+      )
+    }
   }
 
   return (
     <Transition.Root show={true} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
-      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={() => setIsOpen(false)}
+      >
+        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
@@ -31,11 +76,16 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                  <form onSubmit={handleSubmit} className="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">
+                  <form
+                    onSubmit={handleSubmit}
+                    className="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl"
+                  >
                     <div className="h-0 flex-1 overflow-y-auto">
                       <div className="bg-indigo-700 py-6 px-4 sm:px-6">
                         <div className="flex items-center justify-between">
-                          <Dialog.Title className="text-lg font-medium text-white">New Loan</Dialog.Title>
+                          <Dialog.Title className="text-lg font-medium text-white">
+                            New Loan
+                          </Dialog.Title>
                           <div className="ml-3 flex h-7 items-center">
                             <button
                               type="button"
@@ -43,7 +93,10 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                               onClick={() => setIsOpen(false)}
                             >
                               <span className="sr-only">Close panel</span>
-                              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                              <XMarkIcon
+                                className="h-6 w-6"
+                                aria-hidden="true"
+                              />
                             </button>
                           </div>
                         </div>
@@ -58,7 +111,10 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                           <div className="space-y-6 pt-6 pb-5">
                             <fieldset>
                               <div>
-                                <label htmlFor="project-name" className="block text-sm font-medium text-gray-900">
+                                <label
+                                  htmlFor="project-name"
+                                  className="block text-sm font-medium text-gray-900"
+                                >
                                   Amount of USDC to Loan
                                 </label>
                                 <div className="mt-1">
@@ -74,7 +130,9 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                               </div>
                             </fieldset>
                             <fieldset>
-                              <legend className="text-sm font-medium text-gray-900">Collateral Token</legend>
+                              <legend className="text-sm font-medium text-gray-900">
+                                Collateral Token
+                              </legend>
                               <div className="mt-2 space-y-5">
                                 <div className="relative flex items-start">
                                   <div className="absolute flex h-5 items-center">
@@ -89,7 +147,10 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                     />
                                   </div>
                                   <div className="pl-7 text-sm">
-                                    <label htmlFor="privacy-public" className="font-medium text-gray-900">
+                                    <label
+                                      htmlFor="privacy-public"
+                                      className="font-medium text-gray-900"
+                                    >
                                       cbETH
                                     </label>
                                   </div>
@@ -97,7 +158,10 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                               </div>
                             </fieldset>
                             <div>
-                              <label htmlFor="project-name" className="block text-sm font-medium text-gray-900">
+                              <label
+                                htmlFor="project-name"
+                                className="block text-sm font-medium text-gray-900"
+                              >
                                 Amount of Tokens as Collateral
                               </label>
                               <div className="mt-1">
@@ -112,7 +176,9 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                               </div>
                             </div>
                             <fieldset>
-                              <legend className="text-sm font-medium text-gray-900">Loan Duration</legend>
+                              <legend className="text-sm font-medium text-gray-900">
+                                Loan Duration
+                              </legend>
                               <div className="mt-2 space-y-5">
                                 <div className="relative flex items-start">
                                   <div className="absolute flex h-5 items-center">
@@ -127,7 +193,10 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                     />
                                   </div>
                                   <div className="pl-7 text-sm">
-                                    <label htmlFor="privacy-public" className="font-medium text-gray-900">
+                                    <label
+                                      htmlFor="privacy-public"
+                                      className="font-medium text-gray-900"
+                                    >
                                       4 Weeks
                                     </label>
                                   </div>
@@ -145,7 +214,10 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                       />
                                     </div>
                                     <div className="pl-7 text-sm">
-                                      <label htmlFor="privacy-private-to-project" className="font-medium text-gray-900">
+                                      <label
+                                        htmlFor="privacy-private-to-project"
+                                        className="font-medium text-gray-900"
+                                      >
                                         8 Weeks
                                       </label>
                                     </div>
@@ -164,7 +236,10 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                       />
                                     </div>
                                     <div className="pl-7 text-sm">
-                                      <label htmlFor="privacy-private" className="font-medium text-gray-900">
+                                      <label
+                                        htmlFor="privacy-private"
+                                        className="font-medium text-gray-900"
+                                      >
                                         16 Weeks
                                       </label>
                                     </div>
