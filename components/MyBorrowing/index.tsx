@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import BorrowingModal, { Loan } from 'components/BorrowingModal'
 import { CONTRACTS } from 'constants/contracts'
-import { POOL_ABI } from 'constants/abis/poolAbi'
+import { POOL_ABI } from 'constants/abis/poolabi'
 import { ethers } from 'ethers'
 
 let loans: Loan[] = [

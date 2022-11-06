@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { CONTRACTS } from 'constants/contracts'
-import { POOL_ABI } from 'constants/abis/poolAbi'
+import { POOL_ABI } from 'constants/abis/poolabi'
 import { GENERICERC20_ABI } from 'constants/abis/genericerc20abi'
 import { ethers } from 'ethers'
 

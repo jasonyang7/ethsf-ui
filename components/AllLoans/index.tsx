@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import NewLoan from 'components/NewLoan'
 import GlobalLoanModal, { Loan } from 'components/GlobalLoanModal'
 import { CONTRACTS } from 'constants/contracts'
-import { POOL_ABI } from 'constants/abis/poolAbi'
+import { POOL_ABI } from 'constants/abis/poolabi'
 import { ethers } from 'ethers'
 
 let loans: Loan[] = [
