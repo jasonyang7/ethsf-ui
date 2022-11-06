@@ -6,7 +6,8 @@ import Title from 'components/Title'
 import SubTitle from 'components/SubTitle'
 import Tabs from 'components/Tabs'
 import { useTokenDataStore } from 'store/tokendata'
-import LendingPage from 'components/Lending'
+import MyLending from 'components/MyLending'
+import LendModal from 'components/LendModal'
 
 const TabWrapper = styled(Tabs)`
   display: flex;
@@ -33,15 +34,18 @@ const index = () => {
     <>
       <Section height="7" background="white">
         <HeroWrapper>
-          <Title>LEND</Title>
+          <Title>MY LENDING</Title>
           <SubTitle>
-            Lend your tokens to others while earning interest.
+            The tokens that you are currently lending to others.
           </SubTitle>
         </HeroWrapper>
       </Section>
-      <Section height="10" background="white">
+      {/* <Section height="10" background="white">
+        <LendModal></LendModal>
+      </Section> */}
+      <Section height="50" background="white">
         <HeroWrapper>
-          <LendingPage></LendingPage>
+          <MyLending></MyLending>
         </HeroWrapper>
       </Section>
 

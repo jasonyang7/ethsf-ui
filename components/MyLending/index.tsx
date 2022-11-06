@@ -1,6 +1,11 @@
-const loans = [
+import React, { useState } from 'react';
+import NewLoan from 'components/NewLoan'
+import LendModal, { Loan } from 'components/LendModal';
+
+
+const loans:Loan[] = [
   {
-    asset: 'VLCVX',
+    asset: 'MY LOAN',
     title: 'Front-end Developer',
     department: 'Optimization',
     email: 'lindsay.walton@example.com',
@@ -47,7 +52,10 @@ const loans = [
   // More people...
 ]
 
-export default function MyLoans() {
+export default function MyLending() {
+  const [currentlySelectedLoan, setCurrentlySelectedLoan] = useState(loans[0]);
+  const [isViewingLoan, setIsViewingLoan] = useState(false);
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="mt-8 flex flex-col">
@@ -99,12 +107,20 @@ export default function MyLoans() {
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.role}</td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          Repay<span className="sr-only">, {person.name}</span>
-                        </a>
+                        <button
+                          className="text-indigo-600 hover:text-indigo-900"
+                          type="button"
+                          onClick={() => {
+                            setIsViewingLoan(!isViewingLoan);
+                            setCurrentlySelectedLoan(person);
+                          }}>
+                          View<span className="sr-only">test button value</span>
+                        </button>
                       </td>
                     </tr>
                   ))}
+                  {isViewingLoan && <LendModal loan={currentlySelectedLoan} open={isViewingLoan} setIsOpen={setIsViewingLoan}/>}
+
                 </tbody>
               </table>
             </div>

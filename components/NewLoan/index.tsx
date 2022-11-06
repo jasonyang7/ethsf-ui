@@ -46,7 +46,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
   return (
     <Transition.Root show={true} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
-        <div className="fixed inset-0" />
+      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">

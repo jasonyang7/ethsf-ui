@@ -6,7 +6,7 @@ import Title from 'components/Title'
 import SubTitle from 'components/SubTitle'
 import Tabs from 'components/Tabs'
 import { useTokenDataStore } from 'store/tokendata'
-import LendingPage from 'components/Lending'
+import BorrowingPage from 'components/MyBorrowing'
 
 const TabWrapper = styled(Tabs)`
   display: flex;
@@ -33,18 +33,17 @@ const index = () => {
     <>
       <Section height="7" background="white">
         <HeroWrapper>
-          <Title>BORROW</Title>
+          <Title>MY BORROWING</Title>
           <SubTitle>
-            A simple and decentralized way to borrow and lend different tokens.
+            The tokens that you are currently borrowing from others.
           </SubTitle>
         </HeroWrapper>
       </Section>
-      <Section height="10" background="white">
+      <Section height="50" background="white">
         <HeroWrapper>
-          <LendingPage></LendingPage>
+          <BorrowingPage></BorrowingPage>
         </HeroWrapper>
       </Section>
-
     </>
   )
 }

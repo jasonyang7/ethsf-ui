@@ -7,7 +7,7 @@ const stats = [
 const Overview = () => {
   return (
     <div>
-      <h1 className="text-2xl font-semibold text-gray-900">Current Loans</h1>
+      <h1 className="text-2xl font-semibold text-gray-900">Global Loans</h1>
       <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
         {stats.map((item) => (
           <div key={item.name} className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">

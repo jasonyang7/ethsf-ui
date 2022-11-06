@@ -6,13 +6,9 @@ export default function Navigation() {
 
   let resolvedPath = router.pathname.slice(1);
   
-  console.log(resolvedPath);
-
-
-  if (resolvedPath != 'lend' && resolvedPath != 'borrow' && resolvedPath != 'pool') {
-    resolvedPath = 'lend';
+  if (resolvedPath != 'global' && resolvedPath != 'lend' && resolvedPath != 'borrow') {
+    resolvedPath = 'global';
   }
-
 
   return (
     <div className="basis-1/2	text-align-center">
@@ -23,9 +19,9 @@ export default function Navigation() {
         value={resolvedPath}
         onChange={(event) => router.push(event.target.value)}
       >
+        <option value="global">Global</option>
         <option value="lend">Lend</option>
         <option value="borrow">Borrow</option>
-        <option value="pool">Pool</option>
       </select>
     </div>
   )

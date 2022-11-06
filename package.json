@@ -16,6 +16,7 @@
     "@mui/material": "^5.10.12",
     "@reach/dialog": "^0.17.0",
     "@reduxjs/toolkit": "^1.9.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.3",
     "@walletconnect/ethereum-provider": "^1.7.8",
     "@web3-react/coinbase-wallet": "8.0.33-beta.0",
