@@ -33,9 +33,9 @@ const index = () => {
     <>
       <Section height="7" background="white">
         <HeroWrapper>
-          <Title>Sheliak</Title>
+          <Title>LEND</Title>
           <SubTitle>
-            A simple and decentralized way to borrow and lend different tokens.
+            Lend your tokens to others while earning interest.
           </SubTitle>
         </HeroWrapper>
       </Section>

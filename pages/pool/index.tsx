@@ -33,7 +33,7 @@ const index = () => {
     <>
       <Section height="7" background="white">
         <HeroWrapper>
-          <Title>POOOOL</Title>
+          <Title>POOL</Title>
           <SubTitle>
             A simple and decentralized way to borrow and lend different tokens.
           </SubTitle>

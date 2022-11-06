@@ -8,7 +8,6 @@ import { ThemeProvider } from 'styled-components'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { NextRouter } from 'next/router'
 
 import Web3Provider from 'components/web3/Provider'
 
@@ -35,9 +34,9 @@ export default function MyApp(props: any) {
   return (
     <React.Fragment>
       <Head>
-        <title>Web3 Starter Kit</title>
-        <meta name="title" content="Web3 Starter Kit" />
-        <meta name="description" content="React, TypeScript boilerplate for Web3" />
+        <title>Sheliak</title>
+        <meta name="title" content="Sheliak" />
+        <meta name="description" content="A simple and decentralized way to borrow and lend different tokens" />
         <meta name="keywords" content="web3, ethereum" />
         <meta name="robots" content="index, follow" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />

@@ -93,7 +93,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                   <div className="absolute flex h-5 items-center">
                                     <input
                                       id="privacy-public"
-                                      name="privacy"
+                                      name="token"
                                       aria-describedby="privacy-public-description"
                                       type="radio"
                                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
@@ -111,7 +111,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                     <div className="absolute flex h-5 items-center">
                                       <input
                                         id="privacy-private-to-project"
-                                        name="privacy"
+                                        name="token"
                                         aria-describedby="privacy-private-to-project-description"
                                         type="radio"
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
@@ -129,7 +129,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                     <div className="absolute flex h-5 items-center">
                                       <input
                                         id="privacy-private-to-project"
-                                        name="privacy"
+                                        name="token"
                                         aria-describedby="privacy-private-to-project-description"
                                         type="radio"
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
@@ -164,7 +164,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                   <div className="absolute flex h-5 items-center">
                                     <input
                                       id="privacy-public"
-                                      name="privacy"
+                                      name="interest"
                                       aria-describedby="privacy-public-description"
                                       type="radio"
                                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
@@ -182,7 +182,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                     <div className="absolute flex h-5 items-center">
                                       <input
                                         id="privacy-private-to-project"
-                                        name="privacy"
+                                        name="interest"
                                         aria-describedby="privacy-private-to-project-description"
                                         type="radio"
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
@@ -204,7 +204,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                   <div className="absolute flex h-5 items-center">
                                     <input
                                       id="privacy-public"
-                                      name="privacy"
+                                      name="duration"
                                       aria-describedby="privacy-public-description"
                                       type="radio"
                                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
@@ -222,7 +222,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                     <div className="absolute flex h-5 items-center">
                                       <input
                                         id="privacy-private-to-project"
-                                        name="privacy"
+                                        name="duration"
                                         aria-describedby="privacy-private-to-project-description"
                                         type="radio"
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
@@ -240,7 +240,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                     <div className="absolute flex h-5 items-center">
                                       <input
                                         id="privacy-private"
-                                        name="privacy"
+                                        name="duration"
                                         aria-describedby="privacy-private-to-project-description"
                                         type="radio"
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
