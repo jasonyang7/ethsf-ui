@@ -2,15 +2,25 @@ import { Dialog } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
 export interface Loan {
-  asset: string,
-  title: string,
-  department: string,
-  email: string,
-  role: string,
-  image: string,
+  borrowerAddress: string,
+  collateralTokenAddress: string,
+  collateralToken: string,
+  collateralAmount: number,
+  amtUSDCToBorrow: number,
+  loanDuration: string,
+  status: string,
 }
 
 export default function LendModal({ loan, open, setIsOpen }: { loan: Loan, open: boolean, setIsOpen: Function }) {
+  const lendTokens = () => {
+    setIsOpen(false) // don't delete this
+    console.log(loan.collateralToken);
+    console.log(loan.collateralAmount);
+    console.log(loan.amtUSDCToBorrow);
+    console.log(loan.loanDuration);
+    console.log(loan.status);
+  }
+
   return (
     <Dialog open={open} className="relative z-10" onClose={() => setIsOpen(false)}>
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
@@ -24,14 +34,14 @@ export default function LendModal({ loan, open, setIsOpen }: { loan: Loan, open:
               </div>
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                  Lend Tokens
+                  Lent Tokens
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-md text-gray-900">
                     Token
                   </p>
                   <p className="text-sm text-gray-500">
-                    {loan.asset}
+                    {loan.collateralToken}
                   </p>
                 </div>
                 <div className="mt-2">
@@ -39,34 +49,41 @@ export default function LendModal({ loan, open, setIsOpen }: { loan: Loan, open:
                     Collateral Amount
                   </p>
                   <p className="text-sm text-gray-500">
-                    {loan.title}
+                    {loan.collateralAmount}
                   </p>
                 </div>
                 <div className="mt-2">
                   <p className="text-md text-gray-900">
-                    Date
+                    Amount of USDC to Borrow
                   </p>
                   <p className="text-sm text-gray-500">
-                    12/12/1212
+                    {loan.amtUSDCToBorrow}
                   </p>
                 </div>
                 <div className="mt-2">
                   <p className="text-md text-gray-900">
-                    Status
+                    Loan Duration
                   </p>
                   <p className="text-sm text-gray-500">
-                    Open
+                    {loan.loanDuration}
                   </p>
                 </div>
               </div>
             </div>
             <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+              {loan.status == "Complete" && <button
+                type="button"
+                className="inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                onClick={lendTokens}
+              >
+                Claim
+              </button>}
               <button
                 type="button"
                 className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-500 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm bg-gray-100 hover:bg-gray-200 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm"
                 onClick={() => setIsOpen(false)}
               >
-                Close
+                Cancel
               </button>
             </div>
           </Dialog.Panel>
