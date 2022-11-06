@@ -56,18 +56,17 @@ export default function MyLending() {
         provider,
       )
 
-      loans = []
+      let intermediate_state_loans = []
 
       for (let i = 0; i < (await poolContract.numBorrows()); i++) {
         let borrower = await poolContract.borrows(i)
-        const position = await poolContract.positions(
-          await poolContract.getPositionKey(
-            borrower,
-            CONTRACTS.collateral[chainId],
-            CONTRACTS.borrow_token[chainId],
-          ),
+        console.log(borrower)
+        const key = await poolContract.getPositionKey(
+          borrower,
+          CONTRACTS.collateral[chainId],
+          CONTRACTS.borrow_token[chainId],
         )
-        console.log(position)
+        const position = await poolContract.positions(key)
 
         let curStatus = ''
         if (position.isActive) {
@@ -93,14 +92,12 @@ export default function MyLending() {
           loanDuration: dateStr,
           status: curStatus,
         }
-        loans.push(loan)
+        intermediate_state_loans.push(loan)
       }
-      console.log('items in loans' + loans.length)
+      loans = intermediate_state_loans
       // setIsOpen(false) // don't delete this
     }
   }
-
-  ;(async () => await lendTokens())()
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -207,6 +204,13 @@ export default function MyLending() {
                   )}
                 </tbody>
               </table>
+              <button
+                type="button"
+                className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-500 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm bg-gray-100 hover:bg-gray-200 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm"
+                onClick={() => lendTokens()}
+              >
+                Refresh
+              </button>
             </div>
           </div>
         </div>

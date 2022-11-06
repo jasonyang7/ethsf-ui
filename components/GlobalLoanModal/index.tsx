@@ -44,10 +44,6 @@ export default function GlobalLoanModal({
 
       const COLLATERAL_ADDR = CONTRACTS[loan.collateralToken][chainId]
       const COLLATERAL_AMOUNT = Math.round(loan.collateralAmount)
-      const BORROW_AMOUNT = Math.round(loan.amtUSDCToBorrow)
-      const EXPIRY_TIME = Math.round(
-        Date.now() / 1000 + Number(loan.loanDuration),
-      )
 
       const borrowTokenContract = new ethers.Contract(
         CONTRACTS.borrow_token[chainId],
@@ -55,26 +51,16 @@ export default function GlobalLoanModal({
         provider,
       )
 
-
-      const position = await poolContract.positions(
-        await poolContract.getPositionKey(
-          walletAddress,
-          COLLATERAL_ADDR,
-          borrowTokenContract.address,
-        ),
-      )
       const signer = provider.getSigner(walletAddress)
       await borrowTokenContract.connect(signer).approve(
         POOL_CONTRACT_ADDR,
-        position.borrowAmount, //collateralAmount
+        COLLATERAL_AMOUNT, //collateralAmount
       )
 
       await poolContract.connect(signer).fill(
-        position.borrower, //collateralToken Address
-        position.collateral, //collateralAmount
+        '0x4307f766ED0fF932ce3367e1177180FfA647C46D',
+        COLLATERAL_ADDR, //collateralToken Address
       )
-
-      
     }
     setIsOpen(false) // don't delete this
   }

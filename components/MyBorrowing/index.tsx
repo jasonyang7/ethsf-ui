@@ -56,7 +56,7 @@ export default function BorrowingPage() {
         provider,
       )
 
-      loans = []
+      let intermediate_state_loans = []
 
       for (let i = 0; i < (await poolContract.numBorrows()); i++) {
         let borrower = await poolContract.borrows(i)
@@ -93,9 +93,10 @@ export default function BorrowingPage() {
           loanDuration: dateStr,
           status: curStatus,
         }
-        loans.push(loan)
+        intermediate_state_loans.push(loan)
       }
       console.log('items in loans' + loans.length)
+      loans = intermediate_state_loans
       // setIsOpen(false) // don't delete this
     }
   }
