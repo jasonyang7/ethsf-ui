@@ -12,13 +12,16 @@ export interface Loan {
   amtUSDCToBorrow: number
   loanDuration: string
   status: string
+  shouldCollapse: boolean
 }
 
 export default function GlobalLoanModal({
+  loans,
   loan,
   open,
   setIsOpen,
 }: {
+  loans: Loan[]
   loan: Loan
   open: boolean
   setIsOpen: Function
@@ -61,6 +64,8 @@ export default function GlobalLoanModal({
         '0x4307f766ED0fF932ce3367e1177180FfA647C46D',
         COLLATERAL_ADDR, //collateralToken Address
       )
+      loans = loans.filter((e) => e != loan)
+      console.log(loans.length)
     }
     setIsOpen(false) // don't delete this
   }

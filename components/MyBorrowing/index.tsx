@@ -92,6 +92,7 @@ export default function BorrowingPage() {
           amtUSDCToBorrow: position.borrowAmount.toNumber(),
           loanDuration: dateStr,
           status: curStatus,
+          shouldCollapse: false,
         }
         intermediate_state_loans.push(loan)
       }
@@ -153,6 +154,7 @@ export default function BorrowingPage() {
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {loans.map((loan) => (
                     <tr
+                      className={loan.shouldCollapse ? 'collapse' : 'visible'}
                       key={loan.borrowerAddress + loan.collateralTokenAddress}
                     >
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
@@ -197,10 +199,22 @@ export default function BorrowingPage() {
                           View<span className="sr-only">test button value</span>
                         </button>
                       </td>
+                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                        <button
+                          type="button"
+                          className="opacity-0 text-indigo-600"
+                          onClick={() => {
+                            loan.shouldCollapse = true
+                          }}
+                        >
+                          Remove
+                        </button>
+                      </td>
                     </tr>
                   ))}
                   {isViewingLoan && (
                     <BorrowingModal
+                      loans={loans}
                       loan={currentlySelectedLoan}
                       open={isViewingLoan}
                       setIsOpen={setIsViewingLoan}
