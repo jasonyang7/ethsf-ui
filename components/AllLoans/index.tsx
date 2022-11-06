@@ -3,10 +3,9 @@ import NewLoan from 'components/NewLoan'
 import GlobalLoanModal, { Loan } from 'components/GlobalLoanModal'
 import { CONTRACTS } from 'constants/contracts'
 import { POOL_ABI } from 'constants/abis/poolAbi'
-import { GENERICERC20_ABI } from 'constants/abis/genericerc20abi'
 import { ethers } from 'ethers'
 
-const loans: Loan[] = [
+let loans: Loan[] = [
   {
     borrowerAddress: '0xborrower address1',
     collateralTokenAddress: '0xcollateral token address1',
@@ -59,8 +58,9 @@ export default function AllLoans() {
         provider,
       )
 
+      loans = []
+
       for (let i = 0; i < (await poolContract.numBorrows()); i++) {
-        // for (let i = 0; i < 1; i++) {
         let borrower = await poolContract.borrows(i)
         const position = await poolContract.positions(
           await poolContract.getPositionKey(
@@ -70,13 +70,39 @@ export default function AllLoans() {
           ),
         )
         console.log(position)
-      }
 
+        let curStatus = ''
+        if (position.isActive) {
+          curStatus = 'Active'
+        } else if (position.isFilled) {
+          curStatus = 'Filled'
+        } else if (position.isSettled) {
+          curStatus = 'Settled'
+        } else {
+          curStatus = 'Error'
+        }
+
+        var a = new Date(position.expiryTime.toNumber() * 1000)
+        let dateStr = a.toLocaleDateString('en-US') + ' '
+        dateStr += a.toLocaleTimeString('en-US')
+
+        const loan: Loan = {
+          borrowerAddress: position.borrower,
+          collateralTokenAddress: position.collateral,
+          collateralToken: 'cbETH',
+          collateralAmount: position.collateralAmount.toNumber(),
+          amtUSDCToBorrow: position.borrowAmount.toNumber(),
+          loanDuration: dateStr,
+          status: curStatus,
+        }
+        loans.push(loan)
+      }
+      console.log('items in loans' + loans.length)
       // setIsOpen(false) // don't delete this
     }
   }
 
-  lendTokens()
+  ;(async () => await lendTokens())()
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">

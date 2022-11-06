@@ -26,12 +26,13 @@ export default function NewLoan({ setIsOpen }: { setIsOpen: Function }) {
         provider,
       )
 
+      const now = new Date()
+      now.setDate(now.getDate() + event.target.duration.value * 7)
+
       const COLLATERAL_ADDR = CONTRACTS[event.target.token.value][chainId]
       const COLLATERAL_AMOUNT = Math.round(event.target.amtCollateral.value)
       const BORROW_AMOUNT = Math.round(event.target.usdcLoanAmt.value)
-      const EXPIRY_TIME = Math.round(
-        Date.now() / 1000 + event.target.duration.value,
-      )
+      const EXPIRY_TIME = Math.round(now.getTime() / 1000)
 
       const collateralTokenContract = new ethers.Contract(
         COLLATERAL_ADDR,
