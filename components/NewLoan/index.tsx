@@ -43,6 +43,18 @@ const team = [
 
 export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
 
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+    
+    console.log('submitting');
+    console.log('target');
+    console.log(event);
+    console.log(event.target.usdcLoanAmt.value);
+    console.log(event.target.token.value);
+    console.log(event.target.amtCollateral.value);
+    console.log(event.target.duration.value);
+  }
+
   return (
     <Transition.Root show={true} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
@@ -61,7 +73,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                  <form className="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">
+                  <form onSubmit={handleSubmit} className="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">
                     <div className="h-0 flex-1 overflow-y-auto">
                       <div className="bg-indigo-700 py-6 px-4 sm:px-6">
                         <div className="flex items-center justify-between">
@@ -87,7 +99,24 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                         <div className="divide-y divide-gray-200 px-4 sm:px-6">
                           <div className="space-y-6 pt-6 pb-5">
                             <fieldset>
-                              <legend className="text-sm font-medium text-gray-900">Token</legend>
+                              <div>
+                                <label htmlFor="project-name" className="block text-sm font-medium text-gray-900">
+                                  Amount of USDC to Loan
+                                </label>
+                                <div className="mt-1">
+                                  <input
+                                    type="number"
+                                    step="any"
+                                    name="usdcLoanAmt"
+                                    id="usdcLoanAmt"
+                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    defaultValue="0"
+                                  />
+                                </div>
+                              </div>
+                            </fieldset>
+                            <fieldset>
+                              <legend className="text-sm font-medium text-gray-900">Collateral Token</legend>
                               <div className="mt-2 space-y-5">
                                 <div className="relative flex items-start">
                                   <div className="absolute flex h-5 items-center">
@@ -98,105 +127,32 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                       type="radio"
                                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                       defaultChecked
+                                      value="cbETH"
                                     />
                                   </div>
                                   <div className="pl-7 text-sm">
                                     <label htmlFor="privacy-public" className="font-medium text-gray-900">
-                                      Token 1
+                                      cbETH
                                     </label>
-                                  </div>
-                                </div>
-                                <div>
-                                  <div className="relative flex items-start">
-                                    <div className="absolute flex h-5 items-center">
-                                      <input
-                                        id="privacy-private-to-project"
-                                        name="token"
-                                        aria-describedby="privacy-private-to-project-description"
-                                        type="radio"
-                                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                      />
-                                    </div>
-                                    <div className="pl-7 text-sm">
-                                      <label htmlFor="privacy-private-to-project" className="font-medium text-gray-900">
-                                        Token 2
-                                      </label>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div>
-                                  <div className="relative flex items-start">
-                                    <div className="absolute flex h-5 items-center">
-                                      <input
-                                        id="privacy-private-to-project"
-                                        name="token"
-                                        aria-describedby="privacy-private-to-project-description"
-                                        type="radio"
-                                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                      />
-                                    </div>
-                                    <div className="pl-7 text-sm">
-                                      <label htmlFor="privacy-private-to-project" className="font-medium text-gray-900">
-                                        Token 3
-                                      </label>
-                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </fieldset>
                             <div>
                               <label htmlFor="project-name" className="block text-sm font-medium text-gray-900">
-                                Amount of Tokens
+                                Amount of Tokens as Collateral
                               </label>
                               <div className="mt-1">
                                 <input
-                                  type="text"
-                                  name="project-name"
-                                  id="project-name"
+                                  type="number"
+                                  step="any"
+                                  name="amtCollateral"
+                                  id="amtCollateral"
                                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  defaultValue="0"
                                 />
                               </div>
                             </div>
-                            <fieldset>
-                              <legend className="text-sm font-medium text-gray-900">Interest Rate</legend>
-                              <div className="mt-2 space-y-5">
-                                <div className="relative flex items-start">
-                                  <div className="absolute flex h-5 items-center">
-                                    <input
-                                      id="privacy-public"
-                                      name="interest"
-                                      aria-describedby="privacy-public-description"
-                                      type="radio"
-                                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                      defaultChecked
-                                    />
-                                  </div>
-                                  <div className="pl-7 text-sm">
-                                    <label htmlFor="privacy-public" className="font-medium text-gray-900">
-                                      10% APY
-                                    </label>
-                                  </div>
-                                </div>
-                                <div>
-                                  <div className="relative flex items-start">
-                                    <div className="absolute flex h-5 items-center">
-                                      <input
-                                        id="privacy-private-to-project"
-                                        name="interest"
-                                        aria-describedby="privacy-private-to-project-description"
-                                        type="radio"
-                                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                      />
-                                    </div>
-                                    <div className="pl-7 text-sm">
-                                      <label htmlFor="privacy-private-to-project" className="font-medium text-gray-900">
-                                        15% APY
-                                      </label>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </fieldset>
                             <fieldset>
                               <legend className="text-sm font-medium text-gray-900">Loan Duration</legend>
                               <div className="mt-2 space-y-5">
@@ -209,6 +165,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                       type="radio"
                                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                       defaultChecked
+                                      value="4"
                                     />
                                   </div>
                                   <div className="pl-7 text-sm">
@@ -226,6 +183,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                         aria-describedby="privacy-private-to-project-description"
                                         type="radio"
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                        value="8"
                                       />
                                     </div>
                                     <div className="pl-7 text-sm">
@@ -244,6 +202,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
                                         aria-describedby="privacy-private-to-project-description"
                                         type="radio"
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                        value="16"
                                       />
                                     </div>
                                     <div className="pl-7 text-sm">
