@@ -45,10 +45,7 @@ export default function NewLoan({setIsOpen}: {setIsOpen:Function}) {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    
-    console.log('submitting');
-    console.log('target');
-    console.log(event);
+
     console.log(event.target.usdcLoanAmt.value);
     console.log(event.target.token.value);
     console.log(event.target.amtCollateral.value);
