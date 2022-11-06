@@ -37,5 +37,6 @@ export const CONTRACTS: { [key: string]: Address } = {
     1: '0xeefba1e63905ef1d7acba5a8513c70307c1ce441',
     137: '0x11ce4B23bD875D7F5C6a31084f55fDe1e9A87507',
     43114: '0x12097e9755aBf710166D0027c1a2ef7609833D74',
+    80001: '0x22b5Ec130b65EF85C83cF9e6bEa5ac8e76bea5db',
   },
 }
