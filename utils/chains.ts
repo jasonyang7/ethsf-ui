@@ -16,6 +16,11 @@ const AVAX: AddEthereumChainParameter['nativeCurrency'] = {
   symbol: 'AVAX',
   decimals: 18,
 }
+const EVMOS: AddEthereumChainParameter['nativeCurrency'] = {
+  name: 'Evmos',
+  symbol: 'EVMOS',
+  decimals: 18,
+}
 interface BasicChainInformation {
   urls: string[]
   name: string
@@ -27,12 +32,14 @@ interface ExtendedChainInformation extends BasicChainInformation {
 }
 
 function isExtendedChainInformation(
-  chainInformation: BasicChainInformation | ExtendedChainInformation
+  chainInformation: BasicChainInformation | ExtendedChainInformation,
 ): chainInformation is ExtendedChainInformation {
   return !!(chainInformation as ExtendedChainInformation).nativeCurrency
 }
 
-export function getAddChainParameters(chainId: number): AddEthereumChainParameter | number {
+export function getAddChainParameters(
+  chainId: number,
+): AddEthereumChainParameter | number {
   const chainInformation = CHAINS[chainId]
   if (isExtendedChainInformation(chainInformation)) {
     return {
@@ -47,43 +54,59 @@ export function getAddChainParameters(chainId: number): AddEthereumChainParamete
   }
 }
 
-export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainInformation } = {
+export const CHAINS: {
+  [chainId: number]: BasicChainInformation | ExtendedChainInformation
+} = {
   1: {
     urls: [
-      process.env.infuraKey ? `https://mainnet.infura.io/v3/${process.env.infuraKey}` : undefined,
-      process.env.alchemyKey ? `https://eth-mainnet.alchemyapi.io/v2/${process.env.alchemyKey}` : undefined,
+      process.env.infuraKey
+        ? `https://mainnet.infura.io/v3/${process.env.infuraKey}`
+        : undefined,
+      process.env.alchemyKey
+        ? `https://eth-mainnet.alchemyapi.io/v2/${process.env.alchemyKey}`
+        : undefined,
       'https://cloudflare-eth.com',
     ].filter((url) => url !== undefined),
     name: 'Mainnet',
   },
   3: {
-    urls: [process.env.infuraKey ? `https://ropsten.infura.io/v3/${process.env.infuraKey}` : undefined].filter(
-      (url) => url !== undefined
-    ),
+    urls: [
+      process.env.infuraKey
+        ? `https://ropsten.infura.io/v3/${process.env.infuraKey}`
+        : undefined,
+    ].filter((url) => url !== undefined),
     name: 'Ropsten',
   },
   4: {
-    urls: [process.env.infuraKey ? `https://rinkeby.infura.io/v3/${process.env.infuraKey}` : undefined].filter(
-      (url) => url !== undefined
-    ),
+    urls: [
+      process.env.infuraKey
+        ? `https://rinkeby.infura.io/v3/${process.env.infuraKey}`
+        : undefined,
+    ].filter((url) => url !== undefined),
     name: 'Rinkeby',
   },
   5: {
-    urls: [process.env.infuraKey ? `https://goerli.infura.io/v3/${process.env.infuraKey}` : undefined].filter(
-      (url) => url !== undefined
-    ),
+    urls: [
+      process.env.infuraKey
+        ? `https://goerli.infura.io/v3/${process.env.infuraKey}`
+        : undefined,
+    ].filter((url) => url !== undefined),
     name: 'Görli',
   },
   42: {
-    urls: [process.env.infuraKey ? `https://kovan.infura.io/v3/${process.env.infuraKey}` : undefined].filter(
-      (url) => url !== undefined
-    ),
+    urls: [
+      process.env.infuraKey
+        ? `https://kovan.infura.io/v3/${process.env.infuraKey}`
+        : undefined,
+    ].filter((url) => url !== undefined),
     name: 'Kovan',
   },
   // Optimism
   10: {
     urls: [
-      process.env.infuraKey ? `https://optimism-mainnet.infura.io/v3/${process.env.infuraKey}` : undefined,
+      process.env.infuraKey
+        ? `https://optimism-mainnet.infura.io/v3/${process.env.infuraKey}`
+        : undefined,
       'https://mainnet.optimism.io',
     ].filter((url) => url !== undefined),
     name: 'Optimism',
@@ -92,7 +115,9 @@ export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainI
   },
   69: {
     urls: [
-      process.env.infuraKey ? `https://optimism-kovan.infura.io/v3/${process.env.infuraKey}` : undefined,
+      process.env.infuraKey
+        ? `https://optimism-kovan.infura.io/v3/${process.env.infuraKey}`
+        : undefined,
       'https://kovan.optimism.io',
     ].filter((url) => url !== undefined),
     name: 'Optimism Kovan',
@@ -102,7 +127,9 @@ export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainI
   // Arbitrum
   42161: {
     urls: [
-      process.env.infuraKey ? `https://arbitrum-mainnet.infura.io/v3/${process.env.infuraKey}` : undefined,
+      process.env.infuraKey
+        ? `https://arbitrum-mainnet.infura.io/v3/${process.env.infuraKey}`
+        : undefined,
       'https://arb1.arbitrum.io/rpc',
     ].filter((url) => url !== undefined),
     name: 'Arbitrum One',
@@ -111,7 +138,9 @@ export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainI
   },
   421611: {
     urls: [
-      process.env.infuraKey ? `https://arbitrum-rinkeby.infura.io/v3/${process.env.infuraKey}` : undefined,
+      process.env.infuraKey
+        ? `https://arbitrum-rinkeby.infura.io/v3/${process.env.infuraKey}`
+        : undefined,
       'https://rinkeby.arbitrum.io/rpc',
     ].filter((url) => url !== undefined),
     name: 'Arbitrum Testnet',
@@ -121,7 +150,9 @@ export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainI
   // Polygon
   137: {
     urls: [
-      process.env.infuraKey ? `https://polygon-mainnet.infura.io/v3/${process.env.infuraKey}` : undefined,
+      process.env.infuraKey
+        ? `https://polygon-mainnet.infura.io/v3/${process.env.infuraKey}`
+        : undefined,
       'https://polygon-rpc.com',
     ].filter((url) => url !== undefined),
     name: 'Polygon Mainnet',
@@ -129,31 +160,41 @@ export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainI
     blockExplorerUrls: ['https://polygonscan.com'],
   },
   80001: {
-    urls: [process.env.infuraKey ? `https://polygon-mumbai.infura.io/v3/${process.env.infuraKey}` : undefined].filter(
-      (url) => url !== undefined
-    ),
+    urls: [
+      process.env.infuraKey
+        ? `https://polygon-mumbai.infura.io/v3/${process.env.infuraKey}`
+        : undefined,
+    ].filter((url) => url !== undefined),
     name: 'Polygon Mumbai',
     nativeCurrency: MATIC,
     blockExplorerUrls: ['https://mumbai.polygonscan.com'],
   },
   // Avalanche
   43114: {
-    urls: ['https://api.avax.network/ext/bc/C/rpc'].filter((url) => url !== undefined),
+    urls: ['https://api.avax.network/ext/bc/C/rpc'].filter(
+      (url) => url !== undefined,
+    ),
     name: 'Avalanche Mainnet',
     nativeCurrency: AVAX,
     blockExplorerUrls: ['https://snowtrace.io'],
   },
+  // Avalanche
+  9001: {
+    urls: ['https://eth.bd.evmos.org:8545'].filter((url) => url !== undefined),
+    name: 'Evmos Mainnet',
+    nativeCurrency: EVMOS,
+    blockExplorerUrls: ['https://evm.evmos.org'],
+  },
 }
 
-export const URLS: { [chainId: number]: string[] } = Object.keys(CHAINS).reduce<{ [chainId: number]: string[] }>(
-  (accumulator, chainId) => {
-    const validURLs: string[] = CHAINS[Number(chainId)].urls
+export const URLS: { [chainId: number]: string[] } = Object.keys(
+  CHAINS,
+).reduce<{ [chainId: number]: string[] }>((accumulator, chainId) => {
+  const validURLs: string[] = CHAINS[Number(chainId)].urls
 
-    if (validURLs.length) {
-      accumulator[Number(chainId)] = validURLs
-    }
+  if (validURLs.length) {
+    accumulator[Number(chainId)] = validURLs
+  }
 
-    return accumulator
-  },
-  {}
-)
+  return accumulator
+}, {})
