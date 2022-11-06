@@ -7,8 +7,10 @@ import {
   QuestionMarkCircleIcon,
 } from '@heroicons/react/20/solid'
 import { ethers } from 'ethers'
-import { POOL_ABI } from 'constants/poolabi'
-import { GENERICERC20_ABI } from 'constants/genericerc20abi'
+import { CONTRACTS } from 'constants/contracts'
+import { POOL_ABI } from 'constants/abis/poolabi'
+import { GENERICERC20_ABI } from 'constants/abis/genericerc20abi'
+import { chain } from 'lodash'
 const team = [
   {
     name: 'Tom Cook',
@@ -69,13 +71,14 @@ export default function NewLoan({ setIsOpen }: { setIsOpen: Function }) {
       })
       const provider = new ethers.providers.Web3Provider(ethereum)
       const walletAddress = accounts[0] // first account in MetaMask
-      const POOL_CONTRACT_ADDR = '0x1b6C79E47FD08c238E324a1f1bcE0E0b77779D79'
+      const { chainId } = await provider.getNetwork()
+      const POOL_CONTRACT_ADDR = CONTRACTS.pool[chainId]
       const poolContract = new ethers.Contract(
         POOL_CONTRACT_ADDR,
         POOL_ABI,
         provider,
       )
-      const COLLATERAL_ADDR = '0xaF8804588B3A6d6FAD3764ad8610735Aee7d0d6d'
+      const COLLATERAL_ADDR = CONTRACTS.collateral[chainId]
       const collateralTokenContract = new ethers.Contract(
         COLLATERAL_ADDR,
         GENERICERC20_ABI,
